@@ -1,0 +1,6 @@
+juan9811and             admin master username
+mysql+pymysql://admin:juan9811and@mydb.crum4qey00uo.us-east-1.rds.amazonaws.com/mydb
+
+mysql -h mysql+pymysql://admin:juan9811and@mydb.crum4qey00uo.us-east-1.rds.amazonaws.com/mydb -u your_user -p
+mydb.crum4qey00uo.us-east-1.rds.amazonaws.com
+mysql -h mysql+pymysql://admin:juan9811and@mydb.crum4qey00uo.us-east-1.rds.amazonaws.com -u your_user -p

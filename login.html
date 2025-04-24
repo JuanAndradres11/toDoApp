@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Apply background gradient */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            text-align: center;
+            background: linear-gradient(45deg, #ff0077, #7000ff);
+            animation: gradientAnimation 10s ease infinite;
+            height: 100vh;
+        }
+
+        @keyframes gradientAnimation {
+            0%, 100% { background: linear-gradient(45deg, #ff0077, #7000ff); }
+            50% { background: linear-gradient(45deg, #00ffff, #ffdd00); }
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-top: 50px;
+            text-shadow: 0px 0px 5px #fff, 0px 0px 10px #ff0077;
+        }
+
+        form, p {
+            margin-top: 30px;
+        }
+
+        button, a {
+            background: #fff;
+            color: #7000ff;
+            border: none;
+            border-radius: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 1em;
+            padding: 10px 20px;
+            text-decoration: none;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.4), 0px 4px 20px #ff0077;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover, a:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 4px 15px rgba(255, 255, 255, 0.7), 0px 4px 25px #ff0077;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Login to Your Account</h1>
+    <form action="{{ url_for('login_redirect') }}" method="get">
+        <button type="submit">Login with Cognito</button>
+    </form>
+    <p>Don't have an account? <a href="{{ url_for('login_redirect') }}">Sign Up</a></p>
+</body>
+</html>

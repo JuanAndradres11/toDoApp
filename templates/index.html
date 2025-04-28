@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Todo List</title>
+    <style>
+        :root {
+            --bg-color: #030303;
+            --text-color: #ffffff;
+            --accent-color: #6366f1;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --hover-color: rgba(255, 255, 255, 0.05);
+            --card-bg: rgba(255, 255, 255, 0.03);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 50vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 4rem 1rem;
+        }
+
+        .geometric-shape {
+            position: absolute;
+            border-radius: 9999px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.08), transparent);
+            backdrop-filter: blur(2px);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+            animation: float 12s infinite ease-in-out;
+        }
+
+        .shape1 {
+            width: 600px;
+            height: 140px;
+            left: -5%;
+            top: 20%;
+            transform: rotate(12deg);
+            background: linear-gradient(to right, rgba(99, 102, 241, 0.15), transparent);
+        }
+
+        .shape2 {
+            width: 500px;
+            height: 120px;
+            right: 0;
+            top: 75%;
+            transform: rotate(-15deg);
+            background: linear-gradient(to right, rgba(244, 63, 94, 0.15), transparent);
+        }
+
+        .shape3 {
+            width: 300px;
+            height: 80px;
+            left: 10%;
+            bottom: 10%;
+            transform: rotate(-8deg);
+            background: linear-gradient(to right, rgba(139, 92, 246, 0.15), transparent);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(var(--rotation)); }
+            50% { transform: translateY(15px) rotate(var(--rotation)); }
+        }
+
+        .container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            z-index: 1;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 9999px;
+            margin-bottom: 2rem;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: #f43f5e;
+            border-radius: 50%;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0.8));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .add-todo {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .input_field {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input_field:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        button {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            filter: brightness(110%);
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .task-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+        }
+
+        .delete-btn {
+            background: rgba(244, 63, 94, 0.1);
+        }
+
+        .delete-btn:hover {
+            background: rgba(244, 63, 94, 0.2);
+        }
+
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .task-grid {
+                grid-template-columns: 1fr auto;
+            }
+
+            .geometric-shape {
+                transform: scale(0.7);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="geometric-shape shape1"></div>
+        <div class="geometric-shape shape2"></div>
+        <div class="geometric-shape shape3"></div>
+        
+        <div class="container">
+            <div class="badge">
+                <div class="badge-dot"></div>
+                <span style="color: rgba(255,255,255,0.6)">Task Manager</span>
+            </div>
+            
+            <h1>Organize Your Day</h1>
+            
+            <div class="add-todo">
+                <input type="text" id="new-task" class="input_field" placeholder="Add a new task...">
+                <button onclick="addTodo()">Add Task</button>
+            </div>
+            
+            <div id="todo-list"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "/todos";
+    
+        async function getTodos() {
+            const response = await fetch(API_URL);
+            const todos = await response.json();
+            const list = document.getElementById("todo-list");
+            list.innerHTML = "";
+    
+            todos.forEach(todo => {
+                const item = document.createElement("div");
+                item.classList.add("card");
+    
+                item.innerHTML = `
+                    <div class="task-grid">
+                        <span id="task-${todo.id}" class="${todo.completed ? 'completed' : ''}">${todo.task}</span>
+                        <div style="display: flex; gap: 0.5rem">
+                        <button class="action-btn" onclick="updateTodo(${todo.id}, '${todo.task}', ${todo.completed})">
+                            ${todo.completed ? '↩️' : '✓'}
+                        </button>
+                        <button class="action-btn edit-btn" onclick="editTodo(${todo.id}, '${todo.task}')">✎</button>
+                        <button class="action-btn delete-btn" onclick="deleteTodo(${todo.id})">×</button>
+                        </div>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+    
+        async function addTodo() {
+            const input = document.getElementById("new-task");
+            const task = input.value.trim();
+            if (!task) return;
+    
+            await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ task })
+            });
+    
+            input.value = "";
+            getTodos();
+        }
+    
+        async function updateTodo(id, task, completed) {
+            await fetch(`${API_URL}/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ task, completed: !completed })
+            });
+            getTodos();
+        }
+    
+        async function editTodo(id, oldTask) {
+            const taskElement = document.getElementById(`task-${id}`);
+            
+            // Replace task text with an input field
+            const input = document.createElement("input");
+            input.type = "text";
+            input.value = oldTask;
+            input.classList.add("input_field");
+            input.style.width = "100%";
+    
+            // Replace text with input
+            taskElement.replaceWith(input);
+            input.focus();
+    
+            // Save on Enter or blur
+            input.addEventListener("keydown", async (e) => {
+                if (e.key === "Enter") {
+                    await saveEditedTask(id, input.value);
+                }
+            });
+    
+            input.addEventListener("blur", async () => {
+                await saveEditedTask(id, input.value);
+            });
+        }
+    
+        async function saveEditedTask(id, newTask) {
+            if (!newTask.trim()) return getTodos(); // Reset if empty
+    
+            await fetch(`${API_URL}/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ task: newTask })
+            });
+    
+            getTodos();
+        }
+    
+        async function deleteTodo(id) {
+            if (confirm("Are you sure?")) {
+                await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+                getTodos();
+            }
+        }
+    
+        // Initialize
+        window.onload = getTodos;
+    
+        // Add keyboard shortcut for new task
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.activeElement.id === 'new-task') {
+                addTodo();
+            }
+        });
+    </script>
+    
+</body>
+</html>
